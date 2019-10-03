@@ -84,3 +84,9 @@ class Node:
 					tnode = tnode.children[0]
 				h += tnode.length
 			self.height = h
+	def get_tip(self,label):
+	
+		for i in self.leaves():
+			if label == i.label:
+				return i
+	

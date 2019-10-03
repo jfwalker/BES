@@ -18,7 +18,7 @@ def generate_argparser():
 	UNROOTED tree to add branch lengths to""")
 	parser.add_argument("-t", "--treeset", required=True, type=str, help="""
 	UNROOTED trees to get branches from""")
-	parser.add_argument("-s", "--support", required=False, type=str, help="""
+	parser.add_argument("-s", "--support", required=False, default = 0.0, type=float, help="""
 	Support cutoff""")
 	parser.add_argument("-o", "--outfile", type=str, help="""
 	Output file""")
@@ -35,10 +35,10 @@ def main(arguments=None):
 	sp_tree = tree_stuff.build(m_tree)
 	sp_quartet_tree,q_to_n = beset.prepare_sp_tree(sp_tree)
 	
-	
+
 	g_tree = open(args.treeset, "r")
-	beset.process_gene_trees(g_tree,sp_quartet_tree,sp_tree)
-	
+	sp_tree,sp_quartet_tree = beset.process_gene_trees(g_tree,sp_quartet_tree,sp_tree,args.support)
+	beset.summarizer(sp_tree,sp_quartet_tree)
 	
 	
 	Extras.get_time("Run Ending", None)
