@@ -89,4 +89,18 @@ class Node:
 		for i in self.leaves():
 			if label == i.label:
 				return i
-	
+	def get_newick_otherlen(self,data):
+		ret = ""
+		for i in range(len(self.children)):
+			if i == 0:
+				ret += "("
+			ret += self.children[i].get_newick_otherlen(data)
+			if i == len(self.children)-1:
+				ret += ")"
+			else:
+				ret += ","
+		if self.label != None:
+			ret += self.label
+		if data in self.data:
+			ret += ":" + str(self.data[data])
+		return ret

@@ -1,6 +1,7 @@
 import Quartets
 import tree_stuff
 import sys
+import stats
 
 #transform the species tree into a set of nodes that can correspond to quartets
 def prepare_sp_tree(sp_tree):
@@ -86,16 +87,30 @@ def process_gene_trees(g_tree,sp_quartet_tree,sp_tree,supval):
 	
 def summarizer(sp_tree,sp_quartet_tree): 
 	
+	#Data stored on species tree
 	for i in sp_tree.iternodes():
 		if i == sp_tree:
 			continue
+		#No children means a tip
 		if len(i.children) == 0:
-			print i.label + " " + str(len(i.data["qln"]))
+			
+			#verbose printing of all values
+			#print i.label + "\t" + str(len(i.data["qln"]))
+			holder = i.data["qln"]
+			
 		else:
-			print len(sp_quartet_tree[i.data["q"]])
-					
-
-						
+			
+			holder = sp_quartet_tree[i.data["q"]]
+			#verbose printing of all values
+			#print i.get_newick_repr(False) + "\t" + str(len(sp_quartet_tree[i.data["q"]]))
+		
+		#Make sure something has actually been concordant and met the cutoff
+		if len(holder) == 0:
+			continue
+		
+		mean = stats.mean(holder)	
+		i.data["mean"] = mean
+	print sp_tree.get_newick_otherlen("mean") + ";"
 					
 				
 			
