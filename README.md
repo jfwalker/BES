@@ -6,4 +6,4 @@ This is a program designed to do concordance informed branch length. In short th
 ```BES.py -m SpeciesTree -t FileOfGeneTrees -s [optional support value] -o [optional outfile]```
 
 
-The name comes from an exhibit I saw in the British natural history museum on the egyptian god [Bes](https://en.wikipedia.org/wiki/Bes), and having never seen a picture of Bes before I thought it was necessary to draw some public attention to the coolest look egyptian god of all. If you search Bes you'll probably just find things related to the utility company so google searches need to be specific.
+The name comes from an exhibit I saw in the British natural history museum on the egyptian god [Bes](https://en.wikipedia.org/wiki/Bes), credit to Robyn Phillips for pointing it out. Having never seen a picture of Bes before I thought it was necessary to draw some attention to the coolest looking egyptian god of all. If you search Bes you'll probably just find things related to the utility company so google searches need to be specific.
