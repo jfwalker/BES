@@ -108,9 +108,21 @@ def summarizer(sp_tree,sp_quartet_tree):
 		if len(holder) == 0:
 			continue
 		
-		mean = stats.mean(holder)	
+		mean = stats.mean(holder)
+		median = stats.median(holder)
+		min = stats.min(holder)
+		max = stats.max(holder)
 		i.data["mean"] = mean
+		i.data["median"] = median
+		i.data["min"] = min
+		i.data["max"] = max
+		i.data["concord"] = len(holder)
 	print sp_tree.get_newick_otherlen("mean") + ";"
+	print sp_tree.get_newick_otherlen("median") + ";"
+	print sp_tree.get_newick_otherlen("min") + ";"
+	print sp_tree.get_newick_otherlen("max") + ";"
+	print sp_tree.get_newick_otherlen("concord") + ";"
+	
 					
 				
 			
