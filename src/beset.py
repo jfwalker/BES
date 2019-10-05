@@ -113,17 +113,23 @@ def summarizer(sp_tree,sp_quartet_tree,outfile):
 		
 		#Make sure something has actually been concordant and met the cutoff
 		if len(holder) == 0:
-			continue
+			mean = 0.0
+			median = 0.0
+			min = 0.0
+			max = 0.0
+			i.data["concord"] = len(holder)
+		else:
+			mean = stats.mean(holder)
+			median = stats.median(holder)
+			min = stats.min(holder)
+			max = stats.max(holder)
+			i.data["concord"] = len(holder)
 		
-		mean = stats.mean(holder)
-		median = stats.median(holder)
-		min = stats.min(holder)
-		max = stats.max(holder)
+		
 		i.data["mean"] = mean
 		i.data["median"] = median
 		i.data["min"] = min
 		i.data["max"] = max
-		i.data["concord"] = len(holder)
 	array = ["mean","median","min","max","concord"]
 	for i in array:
 		if outfile:
