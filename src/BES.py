@@ -38,7 +38,7 @@ def main(arguments=None):
 
 	g_tree = open(args.treeset, "r")
 	sp_tree,sp_quartet_tree = beset.process_gene_trees(g_tree,sp_quartet_tree,sp_tree,args.support)
-	beset.summarizer(sp_tree,sp_quartet_tree)
+	beset.summarizer(sp_tree,sp_quartet_tree,args.outfile)
 	
 	
 	Extras.get_time("Run Ending", None)

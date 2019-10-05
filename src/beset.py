@@ -85,8 +85,11 @@ def process_gene_trees(g_tree,sp_quartet_tree,sp_tree,supval):
 									st.data["qln"].append(ln)
 	return sp_tree,sp_quartet_tree
 	
-def summarizer(sp_tree,sp_quartet_tree): 
+def summarizer(sp_tree,sp_quartet_tree,outfile): 
 	
+	if outfile:
+		v_out = open(outfile + ".verbose.csv", "w")
+		outf = open(outfile + ".tre", "w")
 	#Data stored on species tree
 	for i in sp_tree.iternodes():
 		if i == sp_tree:
@@ -94,15 +97,19 @@ def summarizer(sp_tree,sp_quartet_tree):
 		#No children means a tip
 		if len(i.children) == 0:
 			
-			#verbose printing of all values
-			#print i.label + "\t" + str(len(i.data["qln"]))
 			holder = i.data["qln"]
-			
+			if outfile:
+				
+				#convert all floats to strings for printing
+				temp = list(map(str,holder))
+				v_out.write(i.label + "," + ",".join(temp) + "\n")		
 		else:
 			
 			holder = sp_quartet_tree[i.data["q"]]
-			#verbose printing of all values
-			#print i.get_newick_repr(False) + "\t" + str(len(sp_quartet_tree[i.data["q"]]))
+			if outfile:
+				
+				temp = list(map(str,holder))
+				v_out.write(i.get_newick_repr(False) + "," + ",".join(temp) + "\n")
 		
 		#Make sure something has actually been concordant and met the cutoff
 		if len(holder) == 0:
@@ -117,11 +124,13 @@ def summarizer(sp_tree,sp_quartet_tree):
 		i.data["min"] = min
 		i.data["max"] = max
 		i.data["concord"] = len(holder)
-	print sp_tree.get_newick_otherlen("mean") + ";"
-	print sp_tree.get_newick_otherlen("median") + ";"
-	print sp_tree.get_newick_otherlen("min") + ";"
-	print sp_tree.get_newick_otherlen("max") + ";"
-	print sp_tree.get_newick_otherlen("concord") + ";"
+	array = ["mean","median","min","max","concord"]
+	for i in array:
+		if outfile:
+			outf.write(sp_tree.get_newick_otherlen(i) + ";\n")
+		else:
+			print sp_tree.get_newick_otherlen(i) + ";"
+
 	
 					
 				
