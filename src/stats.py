@@ -23,3 +23,22 @@ def min(array):
 def max(array):
 	array.sort()
 	return array[-1]
+
+def ssd(array):
+	c = mean(array)
+	ss = sum((float(x)-c)**2 for x in array)
+	return ss
+
+def stddev(array,ddof=0.0):
+	n = len(array)
+	ss = ssd(array)
+	pvar = float(ss)/(float(n)-ddof)
+	return pvar**0.5
+	
+def ci(array,zval):
+	
+	std = stddev(array)
+	sqrt_pop = float(len(array)) ** (1.0 / 2.0)
+	ci_l = mean(array) - zval * (float(std)/sqrt_pop)
+	ci_h = mean(array) + zval * (float(std)/sqrt_pop)
+	return ci_l,ci_h

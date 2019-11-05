@@ -117,6 +117,8 @@ def summarizer(sp_tree,sp_quartet_tree,outfile):
 			median = 0.0
 			min = 0.0
 			max = 0.0
+			CIL = 0.0
+			CIH = 0.0
 			i.data["concord"] = len(holder)
 		else:
 			mean = stats.mean(holder)
@@ -124,13 +126,21 @@ def summarizer(sp_tree,sp_quartet_tree,outfile):
 			min = stats.min(holder)
 			max = stats.max(holder)
 			i.data["concord"] = len(holder)
-		
+			#account for the fact you need two for CI's
+			if len(holder) > 1:
+				#array and z-value (95% is 1.96)
+				CIL,CIH = stats.ci(holder, 1.96)
+			else:
+				CIL = 0.0
+				CIH = 0.0
 		
 		i.data["mean"] = mean
 		i.data["median"] = median
 		i.data["min"] = min
 		i.data["max"] = max
-	array = ["mean","median","min","max","concord"]
+		i.data["cih"] = CIH
+		i.data["cil"] = CIL
+	array = ["mean","median","min","max","cil","cih","concord"]
 	for i in array:
 		if outfile:
 			outf.write(sp_tree.get_newick_otherlen(i) + ";\n")
