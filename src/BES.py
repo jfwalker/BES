@@ -1,8 +1,13 @@
 import sys
 import argparse
 import Extras
-import beset
-import tree_stuff
+import run_cython
+if run_cython.use_cython:
+	import cbeset as beset
+	import ctree as tree_stuff
+else:
+	import beset
+	import tree_stuff
 
 
 
