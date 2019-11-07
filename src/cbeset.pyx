@@ -88,7 +88,7 @@ def process_gene_trees(g_tree,sp_quartet_tree,sp_tree,supval):
 def summarizer(sp_tree,sp_quartet_tree,outfile): 
 	
 	if outfile:
-		v_out = open(outfile + ".verbose.csv", "w")
+		v_out = open(outfile + ".verbose.tsv", "w")
 		outf = open(outfile + ".tre", "w")
 	#Data stored on species tree
 	for i in sp_tree.iternodes():
@@ -102,14 +102,14 @@ def summarizer(sp_tree,sp_quartet_tree,outfile):
 				
 				#convert all floats to strings for printing
 				temp = list(map(str,holder))
-				v_out.write(i.label + "," + ",".join(temp) + "\n")		
+				v_out.write(i.label + "\t" + "\t".join(temp) + "\n")		
 		else:
 			
 			holder = sp_quartet_tree[i.data["q"]]
 			if outfile:
 				
 				temp = list(map(str,holder))
-				v_out.write(i.get_newick_repr(False) + "," + ",".join(temp) + "\n")
+				v_out.write(i.get_newick_repr(False) + "\t" + "\t".join(temp) + "\n")
 		
 		#Make sure something has actually been concordant and met the cutoff
 		if len(holder) == 0:
